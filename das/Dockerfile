@@ -1,17 +1,9 @@
-FROM nuwanbando/javabase
+FROM dockerhub.private.wso2.com/wso2das:3.0.1
 
-RUN mkdir wso2 
+COPY artifacts/mysql-connector-java-5.1.34-bin.jar /mnt/wso2/carbon-home/repository/components/lib/
+COPY das/analytics-datasources.xml /mnt/wso2/carbon-home/repository/conf/datasources/
+COPY das/API_Manager_Analytics_REST.car /mnt/wso2/carbon-home/repository/deployment/server/carbonapps/
 
-COPY packs/wso2das-3.0.1.zip wso2/
-
-RUN cd wso2/ && \
-        unzip wso2das-3.0.1.zip
-
-COPY artifacts/mysql-connector-java-5.1.34-bin.jar /wso2/wso2das-3.0.1/repository/components/lib/
-COPY das/analytics-datasources.xml /wso2/wso2das-3.0.1/repository/conf/datasources/
-COPY das/API_Manager_Analytics_REST.car /wso2/wso2das-3.0.1/repository/deployment/server/carbonapps/
-
-CMD ["sh", "/wso2/wso2das-3.0.1/bin/wso2server.sh"]
 
 EXPOSE 9763
 EXPOSE 9443
